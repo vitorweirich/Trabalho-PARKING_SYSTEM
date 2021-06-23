@@ -1,0 +1,45 @@
+CREATE TABLE grupo (
+    codigo bigserial PRIMARY KEY,
+    nome varchar(60) not null,
+    valor double precision not null
+);
+
+CREATE TABLE vaga (
+    codigo bigserial PRIMARY KEY,
+    nome varchar(60) not null,
+    ocupado integer,
+    grupo bigint references grupo(codigo)
+);
+
+CREATE TABLE estacionado (
+    codigo bigserial PRIMARY KEY,
+    placa CHAR,
+    data_hora_entrada TIMESTAMP,
+    vaga bigint references vaga(codigo),
+    data_hora_saida TIMESTAMP,
+    valor double precision
+);
+
+INSERT INTO public.grupo (nome,valor) VALUES
+	 ('Grupo - A',15.0),
+	 ('Grupo - B',27.0),
+	 ('Grupo - C',18.0),
+	 ('Grupo - D',50.0),
+	 ('Grupo - Z',14.99);
+
+INSERT INTO public.vaga (nome,ocupado,grupo) VALUES
+	 ('C - 1',0,3),
+	 ('B - 1',0,2),
+	 ('A - 1',0,1),
+	 ('D - 1',0,7),
+	 ('A - 2',0,1),
+	 ('D - 2',0,7),
+	 ('Z - 2',1,8),
+	 ('Z - 1',1,8),
+	 ('B - 2',1,2);
+
+INSERT INTO public.estacionado (placa,data_hora_entrada,vaga,data_hora_saida,valor) VALUES
+	 ('abc-1234','2021-06-09 19:29:29.378',21,NULL,NULL),
+	 ('cba-4321','2021-06-09 19:29:54.585',17,NULL,NULL),
+	 ('edc-8563','2021-06-09 19:30:37.168',19,NULL,NULL),
+	 ('ujm-7410','2021-06-09 19:34:50.175',15,'2021-06-09 19:35:54.157',18.0);
